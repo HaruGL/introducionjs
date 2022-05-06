@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina 3d</title>
+</head>
+<body>
+    <p>Primera pagina web con THREE js</p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.js"></script>
+    <script>
+        var scene = new THREE.Scene();
+
+        scene.background = new THREE.Color(0x2a3b4c);
+
+        var loader = new THREE.TextureLoader();
+        loader.load('./space.jpg', function(texture){
+            scene.background = texture;
+        });
+
+        var camera = new THREE.PerspectiveCamera(
+            75, 
+            window.innerWidth/window.innerHeight
+        );
+        var renderer = new THREE.WebGLRenderer();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+
+        var geometry = new THREE.BoxGeometry();
+        var material = new THREE.MeshBasicMaterial();
+        var sphere = new THREE.Mesh(new THREE.SphereGeometry(2,250,250), material);
+
+        scene.add(sphere);
+
+        camera.position.z = 5;
+        
+        const loadera = new THREE.TextureLoader();
+        loadera.load('tierra.jpg', (texture)=>{
+           material.map = texture
+           animate()
+        });
+
+
+        var animate = function(){
+            requestAnimationFrame(animate);
+
+            sphere.rotation.y += 0.005;
+
+            renderer.render(scene, camera);
+        }
+
+        
+    </script>
+</body>
+</html>
